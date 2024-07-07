@@ -11,15 +11,12 @@ class Personaje:
         nueva_velocidad = self.velocidad + otro.velocidad
         return Personaje(nuevo_nombre,nueva_fuerza,nueva_velocidad)
 
-
-
-def try_except(valor,prompt):
-    while True:
-        try:
-            valor = int(input(prompt))
-            break
-        except ValueError:
-            continue
+def try_except(prompt):
+    try:
+        valor = int(input(prompt))
+        return valor
+    except ValueError:
+        pass
 
 
 cantidad = []
@@ -32,62 +29,52 @@ while running:
     print("2. Fusionar personajes")
     print("3. Mostrar personajes")
     print("4. Cerrar")
-    try:
-        opc = int(input("Seleccione una opcion: "))
-        running1 = True
-        while running1:
-            if opc == 1:
+    opc = try_except("Seleccione una opción: ")
+    running1 = True
+    while running1:
+        if opc == 1:
+            print("------------------")
+            nombre = input("Ingrese el nombre del personaje: ")
+            fuerza = try_except("Ingrese la fuerza del personaje: ")
+            velocidad = try_except("Ingrese la velocidad del personaje: ")
+            personaje = Personaje(nombre,fuerza,velocidad)
+            print("------------------")
+            print("Personaje creado con éxito!")
+            print(personaje)
+            cantidad.append(personaje)
+            running1 = False
+        elif opc == 2:
+            print("------------------")
+            if len(cantidad) >= 2:
+                num_personaje_1 = try_except("Ingresa el número de la lista del personaje a fusionar: ")
+                num_personaje_2 = try_except("Ingresa el número de la lista del otro personaje: ")
+                personaje_1 = cantidad[num_personaje_1-1]
+                personaje_2 = cantidad[num_personaje_2-1]
+                fusionar = personaje_1 + personaje_2
                 print("------------------")
-                nombre = input("Ingrese el nombre del personaje: ")
-                while True:
-                    try:
-                        fuerza = int(input("Ingrese la fuerza del personaje: "))
-                        break
-                    except:
-                        continue
-                while True:
-                    try:
-                        velocidad = int(input("Ingrese la velocidad del personaje: "))
-                        break
-                    except:
-                        continue
-                personaje = Personaje(nombre,fuerza,velocidad)
-                print("------------------")
-                print("Personaje creado con exito!")
-                print(personaje)
-                cantidad.append(personaje)
-                running1 = False
-            elif opc == 2:
-                print("------------------")
-                if len(cantidad) >= 2:
-                    num_personaje_1 = int(input("Ingresa el número de la lista del personaje a fusionar: "))
-                    num_personaje_2 = int(input("Ingresa el número de la lista del otro personaje: "))
-                    personaje_1 = cantidad[num_personaje_1-1]
-                    personaje_2 = cantidad[num_personaje_2-1]
-                    fusionar = personaje_1 + personaje_2
-                    print("------------------")
-                    print("Personajes fusionados con exito!")
-                    print(fusionar)
-                    cantidad.append(fusionar)
-                else:
-                    print("Tienen que ser minimo 2 personajes para fusionar")
-                running1 = False
-            elif opc == 3:
-                print("------------------")
-                print("Personajes creados:")
-                if len(cantidad) > 0:
-                    for x in enumerate(cantidad):
-                        print("------------------")
-                        print(x[1])
-                else:
-                    print("------------------")
-                    print("No tiene personajes en su lista")
-                running1 = False
-            elif opc == 4:
-                print("------------------")
-                running1 = False
-                running = False
+                print("Personajes fusionados con éxito!")
+                print(fusionar)
+                cantidad.append(fusionar)
             else:
-                running1 = False
-    except ValueError:
-        running = True
+                print("Mínimo 2 personajes para fusionar")
+            running1 = False
+        elif opc == 3:
+            print("------------------")
+            print("Personajes creados:")
+            if len(cantidad) > 0:
+                for x in enumerate(cantidad):
+                    print("------------------")
+                    print(x[1])
+            else:
+                print("------------------")
+                print(cantidad)
+                print("No tiene personajes en su lista")
+            running1 = False
+        elif opc == 4:
+            print("------------------")
+            running1 = False
+            running = False
+        else:
+            running1 = False
+
+# reto completado :D
